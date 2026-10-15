@@ -2,6 +2,10 @@
 import http from 'node:http';
 import { server as wisp } from '@mercuryworkshop/wisp-js/server';
 
+// Render has no outbound IPv6, so prefer IPv4 addresses or sites fail with "could not connect".
+wisp.options.dns_result_order = 'ipv4first';
+wisp.options.dns_ttl = 300;
+
 const port = process.env.PORT || 5001;
 const httpServer = http.createServer((req, res) => {
   res.writeHead(200, { 'content-type': 'text/plain' });
